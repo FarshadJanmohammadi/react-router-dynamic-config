@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React from "react";
 import { Link } from "react-router";
+import HeroPost from "./UI/Hero";
 
 export interface IPost {
   id: string;
@@ -11,7 +12,7 @@ export interface IPost {
 }
 
 const PostsPage = () => {
-  const { data: postsData } = useQuery({
+  useQuery({
     queryKey: ["posts", "getPosts"],
     queryFn: async () => {
       const { data } = await axios.get<IPost[]>(
@@ -23,14 +24,7 @@ const PostsPage = () => {
 
   return (
     <ul>
-      {postsData?.map((post) => (
-        <li key={post.id}>
-          <Link to={`/posts/${post.id}`}>
-            {post.id}
-            {post.title}
-          </Link>
-        </li>
-      ))}
+      <HeroPost />
     </ul>
   );
 };
